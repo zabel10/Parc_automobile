@@ -20,4 +20,6 @@ COPY . .
 RUN composer install --optimize-autoloader --no-dev
 
 # Commande de démarrage pour Render
+RUN php artisan config:clear
+RUN php artisan cache:clear
 CMD php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
