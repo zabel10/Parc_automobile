@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ConducteurController;
-use App\Http\Controllers\VehiculeController;
-use App\Http\Controllers\MissionController;
-use App\Http\Controllers\CarburantController;
-use App\Http\Controllers\AlerteController;
-use App\Http\Controllers\MaintenanceController;
+// use App\Http\Controllers\DashboardController;
+// use App\Http\Controllers\ProfileController;
+// use App\Http\Controllers\UserController;
+// use App\Http\Controllers\ConducteurController;
+// use App\Http\Controllers\VehiculeController;
+// use App\Http\Controllers\MissionController;
+// use App\Http\Controllers\CarburantController;
+// use App\Http\Controllers\AlerteController;
+// use App\Http\Controllers\MaintenanceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,118 +18,122 @@ use App\Http\Controllers\MaintenanceController;
 |--------------------------------------------------------------------------
 */
 
-Route::redirect('/', '/dashboard');
-
-require __DIR__.'/auth.php';
-
-/*
-|--------------------------------------------------------------------------
-| Routes authentifiées
-|--------------------------------------------------------------------------
-*/
-
-Route::middleware('auth')->group(function () {
-
-    /*
-    |--------------------------------------------------------------------------
-    | Dashboard
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Profil
-    |--------------------------------------------------------------------------
-    */
-
-    Route::get('/profile', [ProfileController::class, 'edit'])
-        ->name('profile.edit');
-
-    Route::put('/profile', [ProfileController::class, 'update'])
-        ->name('profile.update');
+Route::get('/', function(){
+    return response()->json(['message' => 'API Parc Automobile - ok']);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Administrateur
-|--------------------------------------------------------------------------
-*/
+// Route::redirect('/', '/dashboard');
 
-Route::middleware(['auth', 'role:Administrateur'])->group(function () {
+// require __DIR__.'/auth.php';
 
-    Route::resource('users', UserController::class);
+// /*
+// |--------------------------------------------------------------------------
+// | Routes authentifiées
+// |--------------------------------------------------------------------------
+// */
 
-});
+// Route::middleware('auth')->group(function () {
 
-/*
-|--------------------------------------------------------------------------
-| Gestionnaire
-|--------------------------------------------------------------------------
-*/
+//     /*
+//     |--------------------------------------------------------------------------
+//     | Dashboard
+//     |--------------------------------------------------------------------------
+//     */
 
-Route::middleware(['auth', 'role:Gestionnaire'])->group(function () {
+//     Route::get('/dashboard', [DashboardController::class, 'index'])
+//         ->name('dashboard');
 
-    Route::resource('conducteurs', ConducteurController::class);
+//     /*
+//     |--------------------------------------------------------------------------
+//     | Profil
+//     |--------------------------------------------------------------------------
+//     */
 
-    Route::resource('vehicules', VehiculeController::class);
+//     Route::get('/profile', [ProfileController::class, 'edit'])
+//         ->name('profile.edit');
 
-    Route::resource('missions', MissionController::class);
+//     Route::put('/profile', [ProfileController::class, 'update'])
+//         ->name('profile.update');
+// });
 
-    Route::patch(
-        'missions/{mission}/valider',
-        [MissionController::class, 'valider']
-    )->name('missions.valider');
+// /*
+// |--------------------------------------------------------------------------
+// | Administrateur
+// |--------------------------------------------------------------------------
+// */
 
-    Route::patch(
-        'missions/{mission}/demarrer',
-        [MissionController::class, 'demarrer']
-    )->name('missions.demarrer');
+// Route::middleware(['auth', 'role:Administrateur'])->group(function () {
 
-    Route::patch(
-        'missions/{mission}/terminer',
-        [MissionController::class, 'terminer']
-    )->name('missions.terminer');
+//     Route::resource('users', UserController::class);
 
-    Route::resource('maintenances', MaintenanceController::class)
-        ->except('update');
+// });
 
-    Route::patch(
-        'maintenances/{maintenance}/demarrer',
-        [MaintenanceController::class, 'demarrer']
-    )->name('maintenances.demarrer');
+// /*
+// |--------------------------------------------------------------------------
+// | Gestionnaire
+// |--------------------------------------------------------------------------
+// */
 
-    Route::patch(
-        'maintenances/{maintenance}/terminer',
-        [MaintenanceController::class, 'terminer']
-    )->name('maintenances.terminer');
+// Route::middleware(['auth', 'role:Gestionnaire'])->group(function () {
 
-});
+//     Route::resource('conducteurs', ConducteurController::class);
 
-/*
-|--------------------------------------------------------------------------
-| Conducteur
-|--------------------------------------------------------------------------
-*/
+//     Route::resource('vehicules', VehiculeController::class);
 
-Route::middleware(['auth', 'role:Conducteur'])->group(function () {
+//     Route::resource('missions', MissionController::class);
 
-    Route::resource('carburants', CarburantController::class)
-        ->except([
-            'edit',
-            'update',
-        ]);
+//     Route::patch(
+//         'missions/{mission}/valider',
+//         [MissionController::class, 'valider']
+//     )->name('missions.valider');
 
-    Route::resource('alertes', AlerteController::class)
-        ->except([
-            'update',
-        ]);
+//     Route::patch(
+//         'missions/{mission}/demarrer',
+//         [MissionController::class, 'demarrer']
+//     )->name('missions.demarrer');
 
-    Route::patch(
-        'alertes/{alerte}/resoudre',
-        [AlerteController::class, 'resoudre']
-    )->name('alertes.resoudre');
+//     Route::patch(
+//         'missions/{mission}/terminer',
+//         [MissionController::class, 'terminer']
+//     )->name('missions.terminer');
 
-});
+//     Route::resource('maintenances', MaintenanceController::class)
+//         ->except('update');
+
+//     Route::patch(
+//         'maintenances/{maintenance}/demarrer',
+//         [MaintenanceController::class, 'demarrer']
+//     )->name('maintenances.demarrer');
+
+//     Route::patch(
+//         'maintenances/{maintenance}/terminer',
+//         [MaintenanceController::class, 'terminer']
+//     )->name('maintenances.terminer');
+
+// });
+
+// /*
+// |--------------------------------------------------------------------------
+// | Conducteur
+// |--------------------------------------------------------------------------
+// */
+
+// Route::middleware(['auth', 'role:Conducteur'])->group(function () {
+
+//     Route::resource('carburants', CarburantController::class)
+//         ->except([
+//             'edit',
+//             'update',
+//         ]);
+
+//     Route::resource('alertes', AlerteController::class)
+//         ->except([
+//             'update',
+//         ]);
+
+//     Route::patch(
+//         'alertes/{alerte}/resoudre',
+//         [AlerteController::class, 'resoudre']
+//     )->name('alertes.resoudre');
+
+// });
